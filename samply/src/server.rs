@@ -162,7 +162,7 @@ fn generate_token() -> String {
 async fn make_listener(port_selection: PortSelection) -> (TcpListener, SocketAddr) {
     match port_selection {
         PortSelection::OnePort(port) => {
-            let addr = SocketAddr::from(([127, 0, 0, 1], port));
+            let addr = SocketAddr::from(([0, 0, 0, 0], port));
             match TcpListener::bind(&addr).await {
                 Ok(listener) => (listener, addr),
                 Err(e) => {
@@ -174,7 +174,7 @@ async fn make_listener(port_selection: PortSelection) -> (TcpListener, SocketAdd
         PortSelection::TryMultiple(range) => {
             let mut error = None;
             for port in range.clone() {
-                let addr = SocketAddr::from(([127, 0, 0, 1], port));
+                let addr = SocketAddr::from(([0, 0, 0, 0], port));
                 match TcpListener::bind(&addr).await {
                     Ok(listener) => return (listener, addr),
                     Err(e) => {
